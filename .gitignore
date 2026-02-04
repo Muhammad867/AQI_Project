@@ -1,0 +1,33 @@
+# --- Security (Sabse Important) ---
+.env
+.env.local
+secrets.json
+
+# --- Python System Files (Kachra) ---
+__pycache__/
+*.pyc
+
+# --- Environments (Ye GitHub pe nahi jane chahiye) ---
+env/
+venv/
+.venv/
+anaconda3/
+
+# --- Jupyter Notebook Checkpoints ---
+.ipynb_checkpoints/
+
+# --- IDE Settings (VS Code settings nahi upload karte) ---
+.vscode/
+.idea/
+
+# --- OS Files ---
+.DS_Store
+Thumbs.db
+
+# --- Cache Files ---
+.cache
+.cache.sqlite
+*.sqlite
+
+# --- Ignored Folders ---
+Miscallenous/

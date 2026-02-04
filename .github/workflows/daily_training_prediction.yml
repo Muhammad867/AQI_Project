@@ -1,0 +1,34 @@
+name: Daily Training & Prediction 🧠
+
+on:
+  schedule:
+    # UTC 00:00 (Pakistan 5:00 AM) par chalega
+    - cron: '0 0 * * *'
+  workflow_dispatch: # Manual Button
+
+jobs:
+  train-and-predict:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Libraries
+        run: pip install -r requirements.txt
+
+      # 1. Pehle Model Train hoga (Taaza Data par)
+      - name: Retrain Model
+        env:
+          HOPSWORKS_API_KEY: ${{ secrets.HOPSWORKS_API_KEY }}
+        run: python 4_model_training.py
+
+      # 2. Phir Prediction hogi (Naye Model se)
+      - name: Run Batch Prediction
+        env:
+          HOPSWORKS_API_KEY: ${{ secrets.HOPSWORKS_API_KEY }}
+        run: python 5_batch_prediction.py
