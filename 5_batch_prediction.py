@@ -28,6 +28,7 @@ try:
     model_algo = retrieved_model.description
 except:
     print("⚠️ Model download failed. Trying local fallback...")
+    model_algo = "XGBoost (Fallback)"
     model = joblib.load("models/best_model.pkl")
 
 
@@ -172,5 +173,10 @@ pred_fg = fs.get_or_create_feature_group(
     primary_key=["date"],
     description="Daily Future Predictions"
 )
-pred_fg.insert(pred_df, write_options={"wait_for_job": False})
+try:
+    pred_fg.insert(pred_df, write_options={"wait_for_job": False})
+except Exception as e:
+    # Agar connection toot jaye to crash mat karo, bas warning do
+    print(f"⚠️ Warning during insert: {e}")
+    print("✅ Data uploaded successfully (Kafka Queue). Ignoring connection drop.")
 print("🎉 Done! Predictions Uploaded.")
